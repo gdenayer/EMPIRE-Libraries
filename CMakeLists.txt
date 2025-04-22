@@ -1,12 +1,12 @@
 #------------------------------------------------------------------------------------#
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 ExternalProject_Add(flann
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src
-	BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src/build
-	INSTALL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib
-	CONFIGURE_COMMAND cmake -D BUILD_C_BINDINGS=OFF -D CMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/lib ..
-	BUILD_COMMAND $(MAKE)
-	INSTALL_COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src/build/lib/libflann_cpp_s.a ${CMAKE_CURRENT_SOURCE_DIR}/lib/libflann_cpp_s.a
+        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src
+        BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src/build
+        INSTALL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib
+        CONFIGURE_COMMAND cmake -D BUILD_C_BINDINGS=OFF -D CMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/lib ..
+        BUILD_COMMAND $(MAKE)
+        INSTALL_COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src/build/lib/libflann_cpp_s.a ${CMAKE_CURRENT_SOURCE_DIR}/lib/libflann_cpp_s.a
 )
 ExternalProject_Add(nlopt
         SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nlopt-2.4.1
@@ -42,12 +42,12 @@ SET(ENV{TEST} ${CMAKE_CURRENT_SOURCE_DIR})
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 ExternalProject_Add(flann
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src
-	BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src/build
-	INSTALL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib
-	CONFIGURE_COMMAND cmake -G "NMake Makefiles" -D BUILD_C_BINDINGS=OFF -D CMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/lib ..
-    BUILD_COMMAND nmake
-    INSTALL_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src/build/lib/ && copy flann_cpp_s.lib ..\\..\\..\\lib
+        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src
+        BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src/build
+        INSTALL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib
+        CONFIGURE_COMMAND cmake -G "NMake Makefiles" -D BUILD_C_BINDINGS=OFF -D CMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/lib ..
+        BUILD_COMMAND nmake
+        INSTALL_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/flann-1.7.1-src/build/lib/ && copy flann_cpp_s.lib ..\\..\\..\\lib
 )
 # TODO DEBUG ? COMPILATION FOR WINDOWS OF NLOPT
 ExternalProject_Add(nlopt
@@ -78,6 +78,11 @@ IF (${USE_INTEL_COMPILERS_MKL_IMPI_LINUX})
   SET (CMAKE_CXX_COMPILER "icpc")
 ENDIF()
 
+IF (${USE_INTELLLVM_COMPILERS_MKL_IMPI_LINUX})
+  SET (CMAKE_C_COMPILER "icx")
+  SET (CMAKE_CXX_COMPILER "icpx")
+ENDIF()
+
 IF (${USE_GNU_COMPILERS_EINGEN_LINUX})
   SET (CMAKE_C_COMPILER "gcc")
   SET (CMAKE_CXX_COMPILER "g++")
@@ -94,8 +99,8 @@ ExternalProject_Get_Property(eigen SOURCE_DIR)
 MACRO_APPEND_GLOBAL_VARIABLE(EMPIRE_thirdparty_INCLUDES "${SOURCE_DIR}")
 # MACRO_APPEND_GLOBAL_VARIABLE(EMPIRE_thirdparty_INCLUDES "${SOURCE_DIR}/include")
 #------------------------------------------------------------------------------------#
-get_property(EMPIRE_thirdparty_INCLUDES GLOBAL PROPERTY EMPIRE_thirdparty_INCLUDES) 
-get_property(EMPIRE_thirdparty_SOURCES GLOBAL PROPERTY EMPIRE_thirdparty_SOURCES) 
+get_property(EMPIRE_thirdparty_INCLUDES GLOBAL PROPERTY EMPIRE_thirdparty_INCLUDES)
+get_property(EMPIRE_thirdparty_SOURCES GLOBAL PROPERTY EMPIRE_thirdparty_SOURCES)
 #------------------------------------------------------------------------------------#
 include_directories(${EMPIRE_thirdparty_INCLUDES})
 #------------------------------------------------------------------------------------#
